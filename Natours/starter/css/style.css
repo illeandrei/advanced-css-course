@@ -6,3 +6,70 @@ Medium green: #55c57a
 Dark green: #28b485
 
 */
+
+/* basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /*measures height including border width */
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #777;
+    padding: 30px;
+}
+
+.header {
+    position: relative;
+    height: 95vh;   /*vh = viewport height in percentage */
+    background-image: linear-gradient(
+        to right bottom, 
+        rgba(126, 213, 111, 0.8),
+        rgba(40, 180, 133, 0.8)), 
+    url(../img/hero.jpg);
+    background-size: cover; 
+    /* Scales the image as large as possible without stretching the image. If the proportions of the image differ from the element, it is cropped either vertically or horizontally so that no empty space remains. */
+    background-position: top;
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+
+.logo-box {
+    position: absolute;
+    top: 40px;  /* is calculated from the first parent with position: relative */
+    left: 40px; /* is calculated from the first parent with position: relative */
+}
+
+.logo {
+    height: 35px;
+}
+
+.text-box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* this is needed so that 'top' and 'left' start counting
+    from the middle of the .text-box element */
+}
+
+.heading-primary {
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.heading-primary-main {
+    display: block; /* it occupies 100% of the width */
+    font-size: 60px;
+    font-weight: 400;
+    letter-spacing: 35px;
+}
+
+.heading-primary-sub {
+    display: block; /* it occupies 100% of the width */
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 17.4px;
+}
