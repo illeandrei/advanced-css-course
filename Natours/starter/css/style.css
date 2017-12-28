@@ -7,20 +7,36 @@ Dark green: #28b485
 
 */
 
-/* basic reset */
-* {
+/* basic reset for all elements (including presudo el)*/
+*,
+*::after,
+*::before {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /*measures height including border width */
+    /* measures height including border width */
+    /* box-sizing value is inherited from 'body' and applied to all elements */
+    /* this allows us to use percentage based lengths */
+    box-sizing: inherit; 
+}
+
+/* set root font size 
+the default browser font size is 16px */
+/* take into account that 'rem' is not supported by IE 9 and older */
+html {
+    /* font-size: 10px; */
+    /* set root font size to percentage instead of px */
+    font-size: 62.5%;
 }
 
 body {
     font-family: "Lato", sans-serif;
     font-weight: 400;
-    font-size: 16px;
+    /* font-size: 16px; */
     line-height: 1.7;
     color: #777;
-    padding: 30px;
+    padding: 3rem;
+
+    box-sizing: border-box;
 }
 
 .header {
@@ -39,37 +55,168 @@ body {
 
 .logo-box {
     position: absolute;
-    top: 40px;  /* is calculated from the first parent with position: relative */
-    left: 40px; /* is calculated from the first parent with position: relative */
+    top: 4rem;  /* is calculated from the first parent with position: relative */
+    left: 4rem; /* is calculated from the first parent with position: relative */
 }
 
 .logo {
-    height: 35px;
+    height: 3.5rem;
 }
 
 .text-box {
     position: absolute;
     top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%); /* this is needed so that 'top' and 'left' start counting
+    /* this is needed so that 'top' and 'left' start counting
     from the middle of the .text-box element */
+    transform: translate(-50%, -50%); 
+    text-align: center;
 }
 
 .heading-primary {
     color: #fff;
     text-transform: uppercase;
+
+    /* fix for the shaking effect at the end of the animation */
+    backface-visibility: hidden;
+    margin-bottom: 6rem;
 }
 
 .heading-primary-main {
     display: block; /* it occupies 100% of the width */
-    font-size: 60px;
+    font-size: 6rem;
     font-weight: 400;
-    letter-spacing: 35px;
+    letter-spacing: 3.5rem;
+
+    animation-name: moveInLeft;
+    animation-duration: 1s;
+    /* property specifies how a CSS animation should progress over the duration of each cycle */
+    animation-timing-function: ease-out;
 }
 
 .heading-primary-sub {
     display: block; /* it occupies 100% of the width */
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 700;
-    letter-spacing: 17.4px;
+    letter-spacing: 1.75rem;
+
+    /* shorthand for all the animation properties */
+    animation: moveInRight 1s ease-out;
+}
+
+@keyframes moveInLeft {
+    /* for browser performace purposes it is best to only animate two properties: opacity and transform */
+    0% {
+        opacity: 0;
+        transform: translateX(-10rem);
+    }
+
+    80% {
+        transform: translateX(1rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(10rem);
+    }
+
+    80% {
+        transform: translateX(-1rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(3rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+/* 'link' and 'visited' are pseudo classes that mark a special state of the html element to which the class is applied (in this case a link tag) */
+.btn:link, 
+.btn:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1.5rem 4rem;
+    display: inline-block;
+    /* for maximum roundness */
+    border-radius: 10rem;
+    /* to smooth out all the transformation effects we use the transition prop */
+    transition: all .2s;
+    /* used as a reference for the ::after presudo element with position: absolute */
+    position: relative;
+    font-size: 1.6rem;
+}
+
+/* 'hover' is another pseudo class of this element (like 'link' and 'visited') */
+.btn:hover {
+    transform: translateY(-.3rem);
+    /* x, y axis shadow, blur effect and color */
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
+}
+
+.btn:active {
+    /* -1px relates to the initial state, not the hover state, so it will look like moving down instead of moving up as the minus suggests */
+    transform: translateY(-.1rem);
+    /* loose a bit of shaddow by reducing y axis and become less blurry */
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+}
+
+.btn-white {
+    background-color: #fff;
+    color: #777;
+}
+
+/* ::after is a pseudo element - like a virtual element right behind the element we are selectig - used for styling that element */
+.btn::after {
+    /* need to specify the content prop to make it display on the page */
+    content: "";
+    /* as the element it copies */
+    display: inline-block;
+    /* this is needed because the pseudo element is traded like a child of the element - so it needs to have the same dimensions */
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    /* to acctually put it behind the elemnt - use absolut positioning and top: 0, left: 0; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*  property specifies the z-order of a positioned element and its descendants. When elements overlap, z-order determines which one covers the other. An element with a larger z-index generally covers an element with a lower one. */
+    z-index: -1;
+    transition: all .4s;
+}
+
+/* to make the ::after pseudo element white we should apply it for the .btn-white class */
+.btn-white::after {
+    background-color: #fff;
+}
+
+/* display the pseudo button element only on hover */
+.btn:hover::after {
+    transform: scaleX(1.2) scaleY(1.4);
+    /* to fade something out -> */
+    opacity: 0;
+}
+
+.btn-animated {
+    animation: moveInBottom .5s ease-out .75s;
+    /* apply the animation 0% state - before the animation starts */
+    animation-fill-mode: backwards;
 }
