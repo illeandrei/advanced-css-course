@@ -53,17 +53,17 @@ body {
     clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
 }
 
-.logo-box {
+.header__logo-box {
     position: absolute;
     top: 4rem;  /* is calculated from the first parent with position: relative */
     left: 4rem; /* is calculated from the first parent with position: relative */
 }
 
-.logo {
+.header__logo {
     height: 3.5rem;
 }
 
-.text-box {
+.header__text-box {
     position: absolute;
     top: 40%;
     left: 50%;
@@ -82,7 +82,7 @@ body {
     margin-bottom: 6rem;
 }
 
-.heading-primary-main {
+.heading-primary--main {
     display: block; /* it occupies 100% of the width */
     font-size: 6rem;
     font-weight: 400;
@@ -94,7 +94,7 @@ body {
     animation-timing-function: ease-out;
 }
 
-.heading-primary-sub {
+.heading-primary--sub {
     display: block; /* it occupies 100% of the width */
     font-size: 2rem;
     font-weight: 700;
@@ -179,7 +179,7 @@ body {
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
 }
 
-.btn-white {
+.btn--white {
     background-color: #fff;
     color: #777;
 }
@@ -204,7 +204,7 @@ body {
 }
 
 /* to make the ::after pseudo element white we should apply it for the .btn-white class */
-.btn-white::after {
+.btn--white::after {
     background-color: #fff;
 }
 
@@ -215,7 +215,7 @@ body {
     opacity: 0;
 }
 
-.btn-animated {
+.btn--animated {
     animation: moveInBottom .5s ease-out .75s;
     /* apply the animation 0% state - before the animation starts */
     animation-fill-mode: backwards;
